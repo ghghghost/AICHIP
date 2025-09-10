@@ -33,9 +33,10 @@ class Sobel(nn.Module):
     def forward(self, img: torch.Tensor) -> torch.Tensor:
         # img: (B,1,H,W), float32 in [0,255]
         x = self.filter(img)            # (B,2,H,W) -> [Gx, Gy]
-        x = x * x
-        x = torch.sum(x, dim=1, keepdim=True)
-        x = torch.sqrt(x + 1e-12)       # numerical stability
+        # x = x * x
+        # x = torch.sum(x, dim=1, keepdim=True)
+        # x = torch.sqrt(x + 1e-12)       # numerical stability
+        x = torch.linalg.vector_norm(x, dim=1, keepdim=True)
         return x
 
 
